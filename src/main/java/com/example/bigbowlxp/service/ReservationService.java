@@ -47,6 +47,7 @@ public class ReservationService {
         Reservation reservationToSave = reservationConverter.toEntity(reservationDTO);
         //ensure it is a create
         reservationToSave.setId(0);
+        reservationToSave.setName("Bowling Jens");
         Reservation savedReservation = reservationRepository.save(reservationToSave);
         return reservationConverter.toDTO(savedReservation);
     }
@@ -69,6 +70,36 @@ public class ReservationService {
             reservationRepository.deleteById(id);
         } else {
             throw new ReservationNotFoundException("Reservation not found with id: " + id);
+        }
+    }
+    public ReservationDTO getReservationByName(String name){
+        Optional<Reservation> optionalReservation = reservationRepository.findByName(name);
+        if(optionalReservation.isPresent()){
+            return reservationConverter.toDTO(optionalReservation.get());
+        } else{
+            throw new ReservationNotFoundException("Reservation not found with name: " + name);
+        }
+    }
+
+
+    public ReservationDTO updateReservation(String name, ReservationDTO reservationDTO){
+        Optional<Reservation> existingReservation = reservationRepository.findByName(name);
+        if(existingReservation.isPresent()){
+            Reservation reservationToUpdate = reservationConverter.toEntity(reservationDTO);
+            //ensure it is the id from the path that is updated
+            reservationToUpdate.setName(name);
+            Reservation savedReservation = reservationRepository.save(reservationToUpdate);
+            return reservationConverter.toDTO(savedReservation);
+        } else {
+            throw new ReservationNotFoundException("Reservation  not found with name: " + name);
+        }
+    }
+    public void deleteReservationByName(String name){
+        Optional<Reservation> reservation = reservationRepository.findByName(name);
+        if(reservation.isPresent()){
+            reservationRepository.deleteByName(name);
+        } else {
+            throw new ReservationNotFoundException("Reservation not found with name: " + name);
         }
     }
 }

@@ -45,4 +45,24 @@ public class ReservationRestController {
         reservationService.deleteReservationById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/reservation/{name}")
+    public ResponseEntity<ReservationDTO> getReservationByName(@PathVariable("name")String name){
+        ReservationDTO reservationDTO = reservationService.getReservationByName(name);
+        return ResponseEntity.ok(reservationDTO);
+    }
+
+    @PutMapping("/reservation/{name}")
+    public ResponseEntity<ReservationDTO> putReservation(@PathVariable("name") String name, @RequestBody ReservationDTO reservationDTO){
+        //parse int pga navn erstattet med id
+        ReservationDTO updatedReservationDTO = reservationService.updateReservation(Integer.parseInt(name), reservationDTO);
+        return ResponseEntity.ok(updatedReservationDTO);
+    }
+
+    @DeleteMapping("/reservation/{name}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable("name") String name){
+        reservationService.deleteReservationByName(name);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
