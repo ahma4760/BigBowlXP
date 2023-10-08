@@ -19,9 +19,10 @@ public class Airhockey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "res_id")
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
     private int numberOfTables;
     private LocalDateTime dateTime;
+    private int playtime;
 
 }

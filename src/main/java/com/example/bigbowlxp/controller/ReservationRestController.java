@@ -1,12 +1,16 @@
 package com.example.bigbowlxp.controller;
 
+import com.example.bigbowlxp.dto.AllDTO;
+import com.example.bigbowlxp.dto.BowlingDTO;
 import com.example.bigbowlxp.dto.ReservationDTO;
+import com.example.bigbowlxp.model.All;
 import com.example.bigbowlxp.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -15,6 +19,21 @@ public class ReservationRestController {
     @Autowired
             //lav serviceklassen
     ReservationService reservationService;
+
+    @GetMapping("/order")
+    public ResponseEntity<List<AllDTO>> getAllActivities(){
+        List<ReservationDTO> reservationDTOList = reservationService.getAllReservations();
+        List<AllDTO> allDTOList = reservationDTOList.stream().map(res -> reservationService.getReservationsWithActivities(res)).toList();
+        return new ResponseEntity<>(allDTOList, HttpStatus.OK);
+    }
+
+    @PostMapping("/order")
+    public ResponseEntity<List<AllDTO>> postOrder(@RequestBody AllDTO allDTO){
+        System.out.println("Post Order Contyroller: " + allDTO);
+        reservationService.createReservation(allDTO.reservationDTO());
+
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+    }
 
     @GetMapping("/reservations")
     public ResponseEntity<List<ReservationDTO>> getAllReservations(){

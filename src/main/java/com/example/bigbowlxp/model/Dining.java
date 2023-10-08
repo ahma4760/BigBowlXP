@@ -18,7 +18,7 @@ public class Dining {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "res_id")
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
     private String table;
     private LocalDateTime dateTime;

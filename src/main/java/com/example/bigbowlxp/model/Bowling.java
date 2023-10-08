@@ -18,9 +18,10 @@ public class Bowling {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "res_id")
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-    private int numberOfAlley;
+    private int numberOfAlleys;
     private LocalDateTime dateTime;
+    private int playtime;
 
 }
