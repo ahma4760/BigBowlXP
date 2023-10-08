@@ -8,26 +8,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class AllConverter {
 
-    ReservationConverter reservationConverter;
-    AirhockeyConverter airhockeyConverter;
-    BowlingConverter bowlingConverter;
-    DiningConverter diningConverter;
+    ReservationConverter reservationConverter = new ReservationConverter();
+    AirhockeyConverter airhockeyConverter = new AirhockeyConverter();
+    BowlingConverter bowlingConverter = new BowlingConverter();
+    DiningConverter diningConverter = new DiningConverter();
     public All toEnity(AllDTO allDTO){
 
         return new All(
-                airhockeyConverter.toEntity(allDTO.airhockeyDTO()),
-                bowlingConverter.toEntity(allDTO.bowlingDTO()),
-                diningConverter.toEntity(allDTO.diningDTO()),
-                reservationConverter.toEntity(allDTO.reservationDTO())
+                allDTO.airhockeyDTO() == null ? null : airhockeyConverter.toEntity(allDTO.airhockeyDTO()),
+                allDTO.bowlingDTO() == null ? null : bowlingConverter.toEntity(allDTO.bowlingDTO()),
+                allDTO.diningDTO() == null ? null : diningConverter.toEntity(allDTO.diningDTO()),
+                allDTO.reservationDTO() == null ? null : reservationConverter.toEntity(allDTO.reservationDTO())
         );
     }
     public AllDTO toDTO(All all){
 
         return new AllDTO(
-                airhockeyConverter.toDTO(all.airhockey),
-                bowlingConverter.toDTO(all.bowling),
-                diningConverter.toDTO(all.dining),
-                reservationConverter.toDTO(all.reservation)
+                all.airhockey == null ? null : airhockeyConverter.toDTO(all.airhockey),
+                all.bowling == null ? null : bowlingConverter.toDTO(all.bowling),
+                all.dining == null ? null : diningConverter.toDTO(all.dining),
+                all.reservation == null ? null : reservationConverter.toDTO(all.reservation)
         );
     }
 
