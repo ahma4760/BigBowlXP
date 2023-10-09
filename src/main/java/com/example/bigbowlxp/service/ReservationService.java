@@ -3,7 +3,9 @@ package com.example.bigbowlxp.service;
 import com.example.bigbowlxp.dto.*;
 import com.example.bigbowlxp.exception.ReservationNotFoundException;
 import com.example.bigbowlxp.model.*;
+import com.example.bigbowlxp.repository.AirhockeyRepository;
 import com.example.bigbowlxp.repository.BowlingRepository;
+import com.example.bigbowlxp.repository.DiningRepository;
 import com.example.bigbowlxp.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationConverter reservationConverter;
     private final BowlingRepository bowlingRepository;
+    private final AirhockeyRepository airhockeyRepository;
+    private final DiningRepository diningRepository;
     private final AllConverter allConverter;
 
     @Autowired
@@ -28,12 +32,16 @@ public class ReservationService {
             ReservationRepository reservationRepository,
             ReservationConverter reservationConverter,
             BowlingRepository bowlingRepository,
-            AllConverter allConverter
+            AllConverter allConverter,
+            AirhockeyRepository airhockeyRepository,
+            DiningRepository diningRepository
     ){
         this.reservationRepository = reservationRepository;
         this.reservationConverter = reservationConverter;
         this.bowlingRepository = bowlingRepository;
         this.allConverter = allConverter;
+        this.airhockeyRepository = airhockeyRepository;
+        this.diningRepository = diningRepository;
     }
 
     public List<ReservationDTO> getAllReservations(){
@@ -64,49 +72,17 @@ public class ReservationService {
         All all = new All();
         all.reservation = reservationConverter.toEntity(reservationDTO);
         Optional<Bowling> bowling = bowlingRepository.findByReservationId(reservationDTO.id());
-        // tilføj airhockey (det samme som bowling)
-        // tilføj dining (det samme som bowling)
+        Optional<Airhockey> airhockey = airhockeyRepository.findByReservationId(reservationDTO.id());
+        Optional<Dining> dining = diningRepository.findByReservationId(reservationDTO.id());
+
         if(bowling.isPresent()){
             all.bowling = bowling.get();
-        } // tilføj airhockey og dining ligesom bowling
+        } if(airhockey.isPresent()){
+            all.airhockey = airhockey.get();
+        } if(dining.isPresent()){
+            all.dining = dining.get();
+        }
         return allConverter.toDTO(all);
-    }
-
-    @Transactional
-    public ReservationDTO createReservationWithActivities(ReservationDTO reservationDTO, BowlingDTO bowlingDTO) {
-        //Create a Reservation entity and set its attributes
-        System.out.println("ReservationService, createReservationWithActivities: "+bowlingDTO+" "+reservationDTO);
-        Reservation reservation = new Reservation();
-        reservation.setCustomerName(reservationDTO.customerName());
-
-        //Creates the activities and set there attributes
-        Bowling bowling = new Bowling();
-        bowling.setNumberOfAlleys(bowlingDTO.numberOfAlleys());
-        bowling.setDateTime(bowlingDTO.localDateTime());
-        bowling.setReservation(reservation); // Associate Bowling with the Reservation
-
-       /* Dining dining = new Dining();
-        dining.setTable(reservationDTO.getTable());
-        dining.setDateTime(reservationDTO.getDateTime());
-        dining.setReservation(reservation); // Associate Dining with the Reservation
-
-        Airhockey airhockey = new Airhockey();
-        airhockey.setNumberOfTables(reservationDTO.getNumberOfTables());
-        airhockey.setDateTime(reservationDTO.getDateTime());
-        airhockey.setReservation(reservation); // Associate Airhockey with the Reservation
-
-        // Set associations between Reservation and its activities
-        reservation.setBowling(bowling);
-        reservation.setDining(dining);
-        reservation.setAirhockey(airhockey);*/
-
-        // Save the Reservation entity, which will also cascade-save related entities
-        Reservation savedReservation = reservationRepository.save(reservation);
-
-        // Convert the saved Reservation entity to a DTO and return it
-        ReservationDTO createdReservationDTO = reservationConverter.toDTO(savedReservation);
-
-        return createdReservationDTO;
     }
 
     public ReservationDTO updateReservation(int id, ReservationDTO reservationDTO){
