@@ -1,9 +1,6 @@
 package com.example.bigbowlxp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -15,6 +12,7 @@ import lombok.*;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
+    public int id;
+    @Column(name = "customer_name")
+    public String customerName;
 }
