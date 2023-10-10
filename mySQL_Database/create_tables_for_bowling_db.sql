@@ -5,8 +5,8 @@ CREATE TABLE `bowling_db`.`reservation` (
   PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `bowling_db`.`user`;
-CREATE TABLE `bowling_db`.`user` (
+DROP TABLE IF EXISTS `bowling_db`.`employee`;
+CREATE TABLE `bowling_db`.`employee` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(16) NOT NULL,
   `password` VARCHAR(16) NOT NULL,
@@ -45,4 +45,14 @@ CREATE TABLE `bowling_db`.`airhockey` (
   `playtime` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`reservation_id`) REFERENCES `bowling_db`.`reservation`(`id`)
+);
+
+DROP TABLE IF EXISTS `bowling_db`.`employee_schedule`;
+CREATE TABLE `bowling_db`.`employee_schedule` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `fk_employee_id` INT NOT NULL,
+  FOREIGN KEY (`fk_employee_id`) REFERENCES `bowling_db`.`employee`(`id`),
+  `start_time` DATETIME NOT NULL,
+  `end_time` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
 );
