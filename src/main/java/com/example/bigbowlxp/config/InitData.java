@@ -12,7 +12,7 @@ public class InitData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Reservation r1 = new Reservation();
-        r1.setName("Jens Bowling");
+        r1.setCustomerName("Jens Bowling");
 
         reservationRepository.save(r1);
     }

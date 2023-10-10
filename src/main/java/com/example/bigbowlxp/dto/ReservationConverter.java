@@ -8,14 +8,14 @@ public class ReservationConverter {
     public Reservation toEntity(ReservationDTO reservationDTO){
         return new Reservation(
                 reservationDTO.id(),
-                reservationDTO.name()
+                reservationDTO.customerName()
         );
     }
 
     public ReservationDTO toDTO(Reservation reservation){
         return new ReservationDTO(
                 reservation.getId(),
-                reservation.getName()
+                reservation.getCustomerName()
         );
     }
 }
