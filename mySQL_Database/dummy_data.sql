@@ -6,7 +6,7 @@ VALUES
   ('Mike Johnson');
 
 -- Dummy data for user table
-INSERT INTO `bowling_db`.`user` (`user_name`, `password`, `is_admin`)
+INSERT INTO `bowling_db`.`employee` (`user_name`, `password`, `is_admin`)
 VALUES
   ('admin', 'admin123', 1),
   ('user1', 'password1', 0),
