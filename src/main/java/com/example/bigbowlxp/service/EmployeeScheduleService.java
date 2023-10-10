@@ -34,4 +34,12 @@ public class EmployeeScheduleService {
                 .map(employeeScheduleConverter::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public Employee_ScheduleDTO createSchedule(Employee_ScheduleDTO employeeScheduleDTO) {
+        Employee_Schedule employeeScheduleToSave = employeeScheduleConverter.toEntity(employeeScheduleDTO);
+        //ensure it is a create
+        employeeScheduleToSave.setId(0);
+        Employee_Schedule savedEmployeeSchedule = employeeScheduleRepository.save(employeeScheduleToSave);
+        return employeeScheduleConverter.toDTO(savedEmployeeSchedule);
+    }
 }

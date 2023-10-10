@@ -1,13 +1,11 @@
 package com.example.bigbowlxp.controller;
 
+import com.example.bigbowlxp.dto.EmployeeDTO;
 import com.example.bigbowlxp.dto.Employee_ScheduleDTO;
 import com.example.bigbowlxp.service.EmployeeScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +21,13 @@ public class EmployeeScheduleRestController {
     public ResponseEntity<List<Employee_ScheduleDTO>> getEmployeeSchedule(@PathVariable("date") LocalDate date) {
         List<Employee_ScheduleDTO> result = employeeScheduleService.getScheduleByDate(date);
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/schedule")
+    public ResponseEntity<Employee_ScheduleDTO> createEmployee(@RequestBody Employee_ScheduleDTO employeeScheduleDTO) {
+        Employee_ScheduleDTO createdSchedule = employeeScheduleService.createSchedule(employeeScheduleDTO);
+        return ResponseEntity.ok(createdSchedule);
+
     }
 
 }
