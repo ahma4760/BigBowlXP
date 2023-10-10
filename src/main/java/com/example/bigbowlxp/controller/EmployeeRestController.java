@@ -15,6 +15,7 @@ public class EmployeeRestController {
         @Autowired
         //lav serviceklassen
         EmployeeRepository employeeRepository;
+        @Autowired
         EmployeeService employeeService;
 
         @GetMapping("/employees")

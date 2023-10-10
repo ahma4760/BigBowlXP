@@ -8,11 +8,11 @@ CREATE TABLE `bowling_db`.`reservation` (
 DROP TABLE IF EXISTS `bowling_db`.`employee`;
 CREATE TABLE `bowling_db`.`employee` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `user_name` VARCHAR(16) NOT NULL,
+  `name` VARCHAR(16) NOT NULL,
   `password` VARCHAR(16) NOT NULL,
   `is_admin` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE (`user_name`)
+  UNIQUE (`name`)
   );
 
 DROP TABLE IF EXISTS `bowling_db`.`dining`;
