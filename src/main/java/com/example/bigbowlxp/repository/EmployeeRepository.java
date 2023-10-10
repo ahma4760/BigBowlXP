@@ -9,7 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository <Employee, Integer>{
-        List<Employee> findAllByName (String name);
+        //List<Employee> findAllByName (String name);
         Optional<Employee> findByName(String name);
         void deleteByName(String name);
+        List<Employee> findAll();
 }
