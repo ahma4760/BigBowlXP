@@ -6,7 +6,7 @@ VALUES
   ('Mike Johnson');
 
 -- Dummy data for user table
-INSERT INTO `bowling_db`.`user` (`user_name`, `password`, `is_admin`)
+INSERT INTO `bowling_db`.`employee` (`name`, `password`, `is_admin`)
 VALUES
   ('admin', 'admin123', 1),
   ('user1', 'password1', 0),
@@ -32,3 +32,10 @@ VALUES
   (1, '2023-10-07 16:00:00', 1, 30),
   (2, '2023-10-08 17:45:00', 2, 60),
   (3, '2023-10-09 18:30:00', 1, 45);
+
+-- Dummy data for employee schedule
+INSERT INTO `bowling_db`.`employee_schedule` (`fk_employee_id`, `start_time`, `end_time`)
+VALUES
+    (1, '2023-10-01 12:30:00', '2023-10-01 17:00:00'),
+    (2, '2023-10-01 09:00:00', '2023-10-01 17:00:00'),
+    (3, '2023-10-01 08:00:00', '2023-10-01 16:00:00')
