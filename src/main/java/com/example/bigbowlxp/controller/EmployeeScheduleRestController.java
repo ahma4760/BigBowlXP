@@ -4,6 +4,8 @@ import com.example.bigbowlxp.dto.EmployeeDTO;
 import com.example.bigbowlxp.dto.Employee_ScheduleDTO;
 import com.example.bigbowlxp.service.EmployeeScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +29,11 @@ public class EmployeeScheduleRestController {
     public ResponseEntity<Employee_ScheduleDTO> createEmployee(@RequestBody Employee_ScheduleDTO employeeScheduleDTO) {
         Employee_ScheduleDTO createdSchedule = employeeScheduleService.createSchedule(employeeScheduleDTO);
         return ResponseEntity.ok(createdSchedule);
-
     }
 
+    @DeleteMapping("/schedule/{id}")
+    public ResponseEntity<Void> deleteSchedule(@PathVariable("id") int id) {
+        employeeScheduleService.deleteEmployeeSchedule(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

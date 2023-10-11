@@ -2,6 +2,7 @@ package com.example.bigbowlxp.service;
 
 import com.example.bigbowlxp.dto.Employee_ScheduleConverter;
 import com.example.bigbowlxp.dto.Employee_ScheduleDTO;
+import com.example.bigbowlxp.exception.EmployeeScheduleNotFoundException;
 import com.example.bigbowlxp.model.Employee_Schedule;
 import com.example.bigbowlxp.repository.EmployeeScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,5 +43,14 @@ public class EmployeeScheduleService {
         employeeScheduleToSave.setId(0);
         Employee_Schedule savedEmployeeSchedule = employeeScheduleRepository.save(employeeScheduleToSave);
         return employeeScheduleConverter.toDTO(savedEmployeeSchedule);
+    }
+
+    public void deleteEmployeeSchedule(int id) {
+        Optional<Employee_Schedule> optionalEmployee_schedule = employeeScheduleRepository.findById(id);
+        if(optionalEmployee_schedule.isPresent()) {
+            employeeScheduleRepository.deleteById(id);
+        } else {
+            throw new EmployeeScheduleNotFoundException("Schedule not found with id " + id);
+        }
     }
 }
