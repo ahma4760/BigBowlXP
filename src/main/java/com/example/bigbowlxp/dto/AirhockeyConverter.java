@@ -2,7 +2,11 @@ package com.example.bigbowlxp.dto;
 
 import com.example.bigbowlxp.model.Airhockey;
 import com.example.bigbowlxp.model.Bowling;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
+@Component
 public class AirhockeyConverter {
 
     public Airhockey toEntity(AirhockeyDTO airhockeyDTO){
@@ -11,7 +15,7 @@ public class AirhockeyConverter {
                 airhockeyDTO.id(),
                 airhockeyDTO.reservation(),
                 airhockeyDTO.numberOfTables(),
-                airhockeyDTO.localDateTime(),
+                LocalDateTime.parse(airhockeyDTO.localDateTime()),
                 airhockeyDTO.playtime()
         );
     }
@@ -20,7 +24,7 @@ public class AirhockeyConverter {
         return new AirhockeyDTO(
                 airhockey.getId(),
                 airhockey.getReservation(),
-                airhockey.getDateTime(),
+                airhockey.getDateTime().toString(),
                 airhockey.getNumberOfTables(),
                 airhockey.getPlaytime()
         );
