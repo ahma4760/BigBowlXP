@@ -53,4 +53,17 @@ public class EmployeeScheduleService {
             throw new EmployeeScheduleNotFoundException("Schedule not found with id " + id);
         }
     }
+
+    public Employee_ScheduleDTO updateEmployeeSchedule(Employee_ScheduleDTO employeeScheduleDTO){
+        Optional<Employee_Schedule> existingEmployeeSchedule = employeeScheduleRepository.findById(employeeScheduleDTO.id());
+        if(existingEmployeeSchedule.isPresent()){
+            Employee_Schedule employeeScheduleToUpdate = employeeScheduleConverter.toEntity(employeeScheduleDTO);
+            employeeScheduleToUpdate.setStartTime(employeeScheduleToUpdate.getStartTime());
+            employeeScheduleToUpdate.setEndTime(employeeScheduleToUpdate.getEndTime());
+            Employee_Schedule savedEmployeeSchedule = employeeScheduleRepository.save(employeeScheduleToUpdate);
+            return employeeScheduleConverter.toDTO(savedEmployeeSchedule);
+        } else {
+            throw new EmployeeScheduleNotFoundException("Employee schedule not found with id: " + employeeScheduleDTO.id());
+        }
+    }
 }

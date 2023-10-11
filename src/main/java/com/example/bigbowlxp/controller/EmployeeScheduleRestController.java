@@ -26,9 +26,15 @@ public class EmployeeScheduleRestController {
     }
 
     @PostMapping("/schedule")
-    public ResponseEntity<Employee_ScheduleDTO> createEmployee(@RequestBody Employee_ScheduleDTO employeeScheduleDTO) {
+    public ResponseEntity<Employee_ScheduleDTO> createEmployeeSchedule(@RequestBody Employee_ScheduleDTO employeeScheduleDTO) {
         Employee_ScheduleDTO createdSchedule = employeeScheduleService.createSchedule(employeeScheduleDTO);
         return ResponseEntity.ok(createdSchedule);
+    }
+
+    @PutMapping("/schedule")
+    public ResponseEntity<Employee_ScheduleDTO> updateEmployeeSchedule(@RequestBody Employee_ScheduleDTO employeeScheduleDTO) {
+        Employee_ScheduleDTO updatedSchedule = employeeScheduleService.updateEmployeeSchedule(employeeScheduleDTO);
+        return ResponseEntity.ok(updatedSchedule);
     }
 
     @DeleteMapping("/schedule/{id}")
