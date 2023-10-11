@@ -47,7 +47,6 @@ public class EmployeeService {
         Employee employeeToSave = employeeConverter.toEntity(employeeDTO);
         //ensure it is a create
         employeeToSave.setId(0);
-        employeeToSave.setName("Bowling Jens");
         Employee savedEmployee = employeeRepository.save(employeeToSave);
         return employeeConverter.toDTO(savedEmployee);
     }
