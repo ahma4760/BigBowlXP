@@ -24,7 +24,10 @@ public class ReservationService {
     private final ReservationConverter reservationConverter;
     private final BowlingRepository bowlingRepository;
     private final AirhockeyRepository airhockeyRepository;
+    private final AirhockeyConverter airhockeyConverter;
     private final DiningRepository diningRepository;
+    private final DiningConverter diningConverter;
+    private final BowlingConverter bowlingConverter;
     private final AllConverter allConverter;
 
     @Autowired
@@ -34,7 +37,10 @@ public class ReservationService {
             BowlingRepository bowlingRepository,
             AllConverter allConverter,
             AirhockeyRepository airhockeyRepository,
-            DiningRepository diningRepository
+            DiningRepository diningRepository,
+            AirhockeyConverter airhockeyConverter,
+            DiningConverter diningConverter,
+            BowlingConverter bowlingConverter
     ){
         this.reservationRepository = reservationRepository;
         this.reservationConverter = reservationConverter;
@@ -42,6 +48,9 @@ public class ReservationService {
         this.allConverter = allConverter;
         this.airhockeyRepository = airhockeyRepository;
         this.diningRepository = diningRepository;
+        this.airhockeyConverter = airhockeyConverter;
+        this.diningConverter = diningConverter;
+        this.bowlingConverter = bowlingConverter;
     }
 
     public List<ReservationDTO> getAllReservations(){
@@ -82,6 +91,30 @@ public class ReservationService {
         } if(dining.isPresent()){
             all.dining = dining.get();
         }
+        return allConverter.toDTO(all);
+    }
+
+    public AllDTO createResevationWithActivities(AllDTO allDTO){
+
+        Reservation reservationToSave = reservationConverter.toEntity(allDTO.reservationDTO());
+        Reservation savedReservation = reservationRepository.save(reservationToSave);
+
+        Airhockey airhockeyToSave = airhockeyConverter.toEntity(allDTO.airhockeyDTO());
+        airhockeyToSave.setReservation(savedReservation);
+        Airhockey savedAirhockey = airhockeyRepository.save(airhockeyToSave);
+
+        Bowling bowlingToSave = bowlingConverter.toEntity(allDTO.bowlingDTO());
+        bowlingToSave.setReservation(savedReservation);
+        Bowling savedBowling = bowlingRepository.save(bowlingToSave);
+
+        Dining diningToSave = diningConverter.toEntity(allDTO.diningDTO());
+        diningToSave.setReservation(savedReservation);
+
+        Dining savedDining = diningRepository.save(diningToSave);
+
+
+        All all = new All(savedAirhockey, savedBowling, savedDining, savedReservation );
+
         return allConverter.toDTO(all);
     }
 

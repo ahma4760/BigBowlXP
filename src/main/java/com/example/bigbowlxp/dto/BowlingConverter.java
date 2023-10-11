@@ -1,7 +1,11 @@
 package com.example.bigbowlxp.dto;
 
 import com.example.bigbowlxp.model.Bowling;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
+@Component
 public class BowlingConverter {
     public Bowling toEntity(BowlingDTO bowlingDTO){
 
@@ -9,7 +13,7 @@ public class BowlingConverter {
                 bowlingDTO.id(),
                 bowlingDTO.reservation(),
                 bowlingDTO.numberOfAlleys(),
-                bowlingDTO.localDateTime(),
+                LocalDateTime.parse(bowlingDTO.localDateTime()),
                 bowlingDTO.playtime()
         );
     }
@@ -19,7 +23,7 @@ public class BowlingConverter {
                  bowling.getId(),
                  bowling.getReservation(),
                  bowling.getNumberOfAlleys(),
-                 bowling.getDateTime(),
+                 bowling.getDateTime().toString(),
                  bowling.getPlaytime()
          );
     }

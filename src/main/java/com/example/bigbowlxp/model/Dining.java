@@ -20,6 +20,6 @@ public class Dining {
     @ManyToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-    private String table;
+    private String tableReservation;
     private LocalDateTime dateTime;
 }

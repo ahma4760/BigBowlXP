@@ -20,7 +20,7 @@ CREATE TABLE `bowling_db`.`dining` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `reservation_id` INT NOT NULL,
   `date_time` DATETIME NOT NULL,
-  `table` VARCHAR(16) NOT NULL,
+  `table_reservation` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`reservation_id`) REFERENCES `bowling_db`.`reservation`(`id`)
 );

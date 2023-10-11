@@ -13,7 +13,7 @@ VALUES
   ('user2', 'password2', 0);
 
 -- Dummy data for dining table
-INSERT INTO `bowling_db`.`dining` (`reservation_id`, `date_time`, `table`)
+INSERT INTO `bowling_db`.`dining` (`reservation_id`, `date_time`, `table_reservation`)
 VALUES
   (1, '2023-10-07 18:00:00', 'Table 1'),
   (2, '2023-10-08 19:30:00', 'Table 2'),

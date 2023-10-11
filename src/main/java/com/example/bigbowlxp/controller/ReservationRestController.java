@@ -28,11 +28,9 @@ public class ReservationRestController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<List<AllDTO>> postOrder(@RequestBody AllDTO allDTO){
-        System.out.println("Post Order Contyroller: " + allDTO);
-        reservationService.createReservation(allDTO.reservationDTO());
-
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+    public ResponseEntity<AllDTO> postOrder(@RequestBody AllDTO allDTO){
+        AllDTO all = reservationService.createResevationWithActivities(allDTO);
+        return new ResponseEntity<>(all , HttpStatus.OK);
     }
 
     @GetMapping("/reservations")
